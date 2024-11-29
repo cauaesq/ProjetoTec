@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="styles.css">
+    <title>BIBLIO HOME</title>
+</head>
+<style>
+     body{
+        margin: 0;
+    padding: 0;
+    }
+
+
+        h1 {
+            color: #ffffff;
+            margin-top: 20px;
+        }
+        .authors-list {
+            margin-top: 30px;
+            list-style-type: none;
+            padding: 0;
+        }
+        .authors-list li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .loading {
+            font-size: 18px;
+            color: #666;
+        }
+
+    .navbar {
+    background-color: #750000; 
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar button {
+    background-color: white; 
+    color: #800000; 
+    border: 1px solid #800000;
+    border-radius: 4px; 
+    padding: 10px 15px; 
+    margin: 0 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+header{
+background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+}
+
+.navbar button:hover {
+    background-color: #ddd;
+}
+
+.content-section {
+    padding: 20px;
+    border: 1px solid #ddd; 
+    margin: 20px; 
+    border-radius: 5px; 
+}
+</style>
+<body>
+
+    <div class="navbar">
+        <button onclick="window.location.href='index.html'">Livros</button>
+        <button onclick="window.location.href='autores.html'">Autores</button>
+        <button onclick="window.location.href='generos.html'">Gêneros</button>
+        <button onclick="window.location.href='pessoas.html'">Pessoas</button>
+        <button onclick="window.location.href='emprestimos.html'">Empréstimos</button>
+        <button onclick="window.location.href='reservas.html'">Reservas</button>
+    </div>
+    <header>
+    <h1>Autores dos Livros</h1>
+</header>
+    <div class="loading" id="loading">Carregando autores...</div>
+
+    <ul class="authors-list" id="authorsList">
+        <!-- Autores serão listados aqui -->
+    </ul>
+
+    <script>
+        // Substitua a URL abaixo pela URL da sua API
+        const apiUrl = 'https://sua-api-aqui.com/autores'; // Substitua com a URL real da sua API
+
+        // Função para obter e exibir os autores
+        async function getAutores() {
+            try {
+                const response = await fetch(apiUrl);
+                const autores = await response.json();
+
+                // Ocultar a mensagem de carregando
+                document.getElementById('loading').style.display = 'none';
+
+                // Exibir a lista de autores
+                const authorsListElement = document.getElementById('authorsList');
+                if (autores && autores.length > 0) {
+                    autores.forEach(autor => {
+                        const li = document.createElement('li');
+                        li.textContent = autor.nome; // Substitua 'nome' se sua API retornar um campo diferente
+                        authorsListElement.appendChild(li);
+                    });
+                } else {
+                    authorsListElement.innerHTML = '<li>Nenhum autor encontrado.</li>';
+                }
+            } catch (error) {
+                console.error('Erro ao buscar os autores:', error);
+                document.getElementById('loading').innerText = 'Erro ao carregar autores';
+
+                document.getElementById('loading').style.display = 'none';
+            const genresListElement = document.getElementById('authorsList');
+            genresListElement.innerHTML = '<li>Não foi possível carregar os autores. Tente novamente mais tarde.</li>';
+            }
+        }
+
+        // Chama a função quando a página for carregada
+        window.onload = getAutores;
+    </script>
+
+  
+
+</body>
+</html>

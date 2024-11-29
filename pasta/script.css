@@ -1,0 +1,105 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+}
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+.container {
+    padding: 20px;
+}
+.form-section {
+    margin-top: 30px;
+}
+
+
+
+input, select {
+    padding: 8px;
+    margin: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+table {
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: center;
+    color: aliceblue;
+    background-color: #750000;
+}
+
+
+
+/*CADASTRO*/
+
+#toggleFormButton {
+    position: absolute; 
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 10px 15px; 
+    border: none; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-size: 16px;
+    transition: background-color 0.3s; 
+}
+
+#toggleFormButton:hover {
+    background-color: #45a049; 
+}
+
+/*header*/
+
+.navbar {
+    background-color: #800000; 
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar button {
+    background-color: white; 
+    color: #800000; 
+    border: 1px solid #800000;
+    border-radius: 4px; 
+    padding: 10px 15px; 
+    margin: 0 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.navbar button:hover {
+    background-color: #ddd;
+}
+
+.content-section {
+    padding: 20px;
+    border: 1px solid #ddd; 
+    margin: 20px; 
+    border-radius: 5px; 
+}
+
+
+

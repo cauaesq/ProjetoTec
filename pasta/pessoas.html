@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIBLIO HOME</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    .navbar {
+        background-color: #750000; 
+        padding: 10px;
+        text-align: center;
+    }
+
+    .navbar button {
+        background-color: white; 
+        color: #800000; 
+        border: 1px solid #800000;
+        border-radius: 4px; 
+        padding: 10px 15px; 
+        margin: 0 5px; 
+        cursor: pointer; 
+        transition: background-color 0.3s; 
+    }
+
+    .navbar button:hover {
+        background-color: #ddd;
+    }
+
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .form-section {
+        margin-top: 30px;
+    }
+
+    input, select {
+        padding: 8px;
+        margin: 10px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #buttt {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    h1, h2 {
+        text-align: center;
+        color: #000000;
+        margin-bottom: 20px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    ul li {
+        background-color: #fff;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    ul li #butt, ul li #editBtn {
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: transform 0.3s ease, background-color 0.3s;
+    }
+
+    ul li #butt {
+        background-color: #e74c3c; /* Botão de Excluir */
+    }
+
+    ul li #editBtn {
+        background-color: #f1c40f; /* Botão de Editar */
+    }
+
+    ul li #butt:hover, ul li #editBtn:hover {
+        background-color: #c0392b; /* Cor de fundo para o botão excluir em hover */
+        transform: scale(0.95); /* Efeito de zoom-out */
+    }
+
+    ul li #editBtn:hover {
+        background-color: #f39c12; /* Cor de fundo para o botão editar em hover */
+        transform: scale(0.95); /* Efeito de zoom-out */
+    }
+
+    /* Responsividade para telas menores */
+    @media (max-width: 600px) {
+        form {
+            width: 90%;
+        }
+
+        #buttt {
+            padding: 14px;
+        }
+    }
+
+    #aga1 {
+        color: #ffffff;
+    }
+</style>
+
+
+</head>
+<body>
+
+    <div class="navbar">
+        <button onclick="window.location.href='index.html'">Livros</button>
+        <button onclick="window.location.href='autores.html'">Autores</button>
+        <button onclick="window.location.href='generos.html'">Gêneros</button>
+        <button onclick="window.location.href='pessoas.html'">Pessoas</button>
+        <button onclick="window.location.href='emprestimos.html'">Empréstimos</button>
+        <button onclick="window.location.href='reservas.html'">Reservas</button>
+    </div>
+
+    <header>
+        <h1 id="aga1">Pessoas</h1>
+    </header>
+
+    <form id="addForm" onsubmit="event.preventDefault(); addPerson();">
+        <input type="text" id="name" placeholder="Nome" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="tel" id="phone" placeholder="Telefone" required />
+        <button id="buttt" type="submit">Cadastrar Pessoa</button>
+    </form>
+
+    <h2>Lista de Pessoas</h2>
+    <ul id="personList">
+        <!-- Lista de pessoas será renderizada aqui -->
+    </ul>
+
+
+
+
+
+
+
+    <script>
+        // Função para carregar os dados do localStorage
+        function loadPeople() {
+            const people = JSON.parse(localStorage.getItem('people')) || [];
+            const personList = document.getElementById('personList');
+            personList.innerHTML = '';
+            
+            people.forEach((person, index) => {
+                const li = document.createElement('li');
+                li.classList.add('person-item');
+                li.innerHTML = `
+                    <span><strong>${person.name}</strong> | ${person.email} | ${person.phone}</span>
+                    <button onclick="removePerson(${index})" id="butt">Deletar</button>
+                    <button onclick="editPerson(${index})" id="editBtn">Editar</button>
+                `;
+                personList.appendChild(li);
+            });
+        }
+
+        // Função para adicionar uma nova pessoa
+        function addPerson() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            if (name && email && phone) {
+                const person = { name, email, phone };
+                const people = JSON.parse(localStorage.getItem('people')) || [];
+                people.push(person);
+                localStorage.setItem('people', JSON.stringify(people));
+
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('phone').value = '';
+                loadPeople();
+            } else {
+                alert('Todos os campos devem ser preenchidos!');
+            }
+        }
+
+        // Função para remover uma pessoa
+        function removePerson(index) {
+            const people = JSON.parse(localStorage.getItem('people')) || [];
+            people.splice(index, 1);
+            localStorage.setItem('people', JSON.stringify(people));
+            loadPeople();
+        }
+
+        // Função para editar uma pessoa
+        function editPerson(index) {
+            const people = JSON.parse(localStorage.getItem('people')) || [];
+            const person = people[index];
+
+            document.getElementById('name').value = person.name;
+            document.getElementById('email').value = person.email;
+            document.getElementById('phone').value = person.phone;
+
+            document.getElementById('addForm').onsubmit = function(event) {
+                event.preventDefault();
+                updatePerson(index);
+            };
+        }
+
+        // Função para atualizar uma pessoa
+        function updatePerson(index) {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+
+            if (name && email && phone) {
+                const people = JSON.parse(localStorage.getItem('people')) || [];
+                people[index] = { name, email, phone };
+                localStorage.setItem('people', JSON.stringify(people));
+
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('phone').value = '';
+                loadPeople();
+            } else {
+                alert('Todos os campos devem ser preenchidos!');
+            }
+
+            document.getElementById('addForm').onsubmit = function(event) {
+                event.preventDefault();
+                addPerson();
+            };
+        }
+
+        // Carregar os dados quando a página for carregada
+        window.onload = loadPeople;
+    </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca - Gêneros</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+     body{
+        margin: 0;
+    padding: 0;
+    }
+    .navbar {
+    background-color: #750000; 
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar button {
+    background-color: white; 
+    color: #800000; 
+    border: 1px solid #800000;
+    border-radius: 4px; 
+    padding: 10px 15px; 
+    margin: 0 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.navbar button:hover {
+    background-color: #ddd;
+}
+
+.content-section {
+    padding: 20px;
+    border: 1px solid #ddd; 
+    margin: 20px; 
+    border-radius: 5px; 
+}
+
+h1 {
+        color: #ffffff;
+        margin-top: 20px;
+    }
+    .genres-list {
+        margin-top: 30px;
+        list-style-type: none;
+        padding: 0;
+    }
+    .genres-list li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+    }
+    .loading {
+        font-size: 18px;
+        color: #666;
+    }
+    header{
+background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+}
+
+
+/* Container principal */
+#aga{
+    color: #ffffff;
+}
+h1, h2 {
+    text-align: center;
+    color: #000000;
+}
+
+/* Estilo do formulário */
+
+
+input, select, #butt {
+    width: 150px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input, select {
+            padding: 8px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+
+/* Estilo do botão */
+#butt {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Estilo da lista de livros */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul li #butt{
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+ul li #butt:hover {
+    background-color: #c0392b;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+    form {
+        width: 90%;
+    }
+
+    #butt {
+        padding: 12px;
+    }
+}
+
+</style>
+<body>
+
+    <div class="navbar">
+        <button onclick="window.location.href='index.html'">Livros</button>
+        <button onclick="window.location.href='autores.html'">Autores</button>
+        <button onclick="window.location.href='generos.html'">Gêneros</button>
+        <button onclick="window.location.href='pessoas.html'">Pessoas</button>
+        <button onclick="window.location.href='emprestimos.html'">Empréstimos</button>
+        <button onclick="window.location.href='reservas.html'">Reservas</button>
+    </div>
+
+
+
+</head>
+<body>
+
+    <header>
+<h1 id="aga">Gêneros dos Livros</h1>
+</header>
+
+<form id="addForm" onsubmit="event.preventDefault(); addBook();">
+    <input type="text" id="title" placeholder="Título do livro" required />
+    <input type="text" id="author" placeholder="Autor" required />
+    <select id="genre" required>
+        <option value="">Selecione o gênero</option>
+        <!-- Os gêneros serão preenchidos aqui via JavaScript -->
+    </select>
+    <button id="butt" type="submit">Adicionar Livro</button>
+</form>
+
+<h2>Lista de Livros</h2>
+<ul id="bookList">
+    <!-- Lista de livros será renderizada aqui -->
+</ul>
+
+<script>
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Para lidar com requisições JSON
+app.use(express.json());
+
+// Lista de gêneros de livros disponíveis
+const bookGenres = ['Ficção', 'Romance', 'Aventura', 'Fantasia', 'Mistério', 'Suspense'];
+
+// Endpoint para retornar a lista de gêneros de livros
+app.get('/book-genres', (req, res) => {
+    res.json(bookGenres);
+});
+
+// Simulação de dados de livros
+let books = [
+    { id: 1, title: 'O Senhor dos Anéis', author: 'J.R.R. Tolkien', genre: 'Fantasia' },
+    { id: 2, title: 'Dom Casmurro', author: 'Machado de Assis', genre: 'Romance' }
+];
+
+// Endpoint para obter todos os livros
+app.get('/books', (req, res) => {
+    res.json(books);
+});
+
+// Endpoint para adicionar um novo livro
+app.post('/books', (req, res) => {
+    const { title, author, genre } = req.body;
+    const newBook = { id: books.length + 1, title, author, genre };
+    books.push(newBook);
+    res.status(201).json(newBook);
+});
+
+// Iniciar o servidor
+app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+});
+
+// URL da API gerada pelo ngrok (substitua com a URL do ngrok)
+const API_URL = 'http://abcd1234.ngrok.io';  // Substitua com a URL gerada pelo ngrok
+
+// Função para buscar os gêneros de livros da API
+async function fetchBookGenres() {
+    try {
+        const response = await fetch(`${API_URL}/book-genres`);
+        const genres = await response.json();
+        renderBookGenres(genres); // Renderiza os gêneros no formulário
+    } catch (error) {
+        console.error('Erro ao buscar gêneros de livros:', error);
+    }
+}
+
+// Função para renderizar os gêneros de livros no formulário
+function renderBookGenres(genres) {
+    const genreSelect = document.getElementById('genre');
+    genreSelect.innerHTML = '';  // Limpa o conteúdo atual antes de adicionar os gêneros
+    genres.forEach(genre => {
+        const option = document.createElement('option');
+        option.value = genre;
+        option.textContent = genre;
+        genreSelect.appendChild(option);
+    });
+}
+
+// Função para adicionar um livro via API
+async function addBook() {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const genre = document.getElementById('genre').value;
+
+    if (title && author && genre) {
+        const newBook = { title, author, genre };
+
+        try {
+            const response = await fetch(`${API_URL}/books`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newBook),
+            });
+            const data = await response.json();
+            renderBooks([data]); // Atualiza a lista de livros após adicionar
+            clearInputs();
+        } catch (error) {
+            console.error('Erro ao adicionar livro:', error);
+        }
+    } else {
+        alert('Por favor, preencha todos os campos.');
+    }
+}
+
+// Função para renderizar os livros na lista
+function renderBooks(booksList) {
+    const bookList = document.getElementById('bookList');
+    booksList.forEach(book => {
+        const li = document.createElement('li');
+        li.innerHTML = `${book.title} - ${book.author} - ${book.genre}`;
+        bookList.appendChild(li);
+    });
+}
+
+// Função para limpar os campos de entrada após adicionar um livro
+function clearInputs() {
+    document.getElementById('title').value = '';
+    document.getElementById('author').value = '';
+    document.getElementById('genre').value = '';
+}
+
+// Carregar os gêneros ao carregar a página
+window.onload = async () => {
+    await fetchBookGenres();
+};
+</script>
+
+</body>
+</html>

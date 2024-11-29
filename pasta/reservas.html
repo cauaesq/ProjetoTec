@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIBLIO HOME - Reservas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style> 
+ body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    .container {
+        padding: 20px;
+    }
+    .books-section, .reservation-section {
+        margin-top: 30px;
+    }
+    .book {
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .book h3 {
+        margin-top: 0;
+    }
+    .book p {
+        margin: 5px 0;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .output {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    select {
+        padding: 8px;
+        margin: 10px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+ 
+    .navbar {
+    background-color: #750000; 
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar button {
+    background-color: white; 
+    color: #800000; 
+    border: 1px solid #800000;
+    border-radius: 4px; 
+    padding: 10px 15px; 
+    margin: 0 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.navbar button:hover {
+    background-color: #ddd;
+}
+
+.content-section {
+    padding: 20px;
+    border: 1px solid #ddd; 
+    margin: 20px; 
+    border-radius: 5px; 
+}
+</style>
+<body>
+
+    <div class="navbar">
+        <button onclick="window.location.href='index.html'">Livros</button>
+        <button onclick="window.location.href='autores.html'">Autores</button>
+        <button onclick="window.location.href='generos.html'">Gêneros</button>
+        <button onclick="window.location.href='pessoas.html'">Pessoas</button>
+        <button onclick="window.location.href='emprestimos.html'">Empréstimos</button>
+        <button onclick="window.location.href='reservas.html'">Reservas</button>
+    </div>
+
+    <header>
+        <h1>Reserva de Livros</h1>
+    </header>
+
+    <div class="container">
+        <section class="books-section">
+            <h2>Livros Disponíveis</h2>
+
+            <div class="book">
+                <h3>O Senhor dos Anéis</h3>
+                <p><strong>Autor:</strong> J.R.R. Tolkien</p>
+                <p><strong>Disponibilidade:</strong> Disponível</p>
+            </div>
+
+            <div class="book">
+                <h3>Dom Casmurro</h3>
+                <p><strong>Autor:</strong> Machado de Assis</p>
+                <p><strong>Disponibilidade:</strong> Disponível</p>
+            </div>
+
+            <div class="book">
+                <h3>1984</h3>
+                <p><strong>Autor:</strong> George Orwell</p>
+                <p><strong>Disponibilidade:</strong> Reservado</p>
+            </div>
+
+        </section>
+
+        <section class="reservation-section">
+            <h2>Escolha o Livro para Reserva</h2>
+
+            <label for="livro">Selecione o Livro:</label>
+            <select id="livro">
+                <option value="O Senhor dos Anéis">O Senhor dos Anéis</option>
+                <option value="Dom Casmurro">Dom Casmurro</option>
+                <option value="1984">1984</option>
+            </select>
+
+            <button onclick="reservarLivro()">Reservar Livro</button>
+            <button onclick="cancelarReserva()">Cancelar Reserva</button>
+        </section>
+
+        <section class="output-section">
+            <h2>Status da Reserva</h2>
+            <div class="output">
+                <p><strong>Livro Reservado:</strong> <span id="livro-reservado">Nenhum</span></p>
+                <p><strong>Status:</strong> <span id="status-reserva">Nenhuma reserva realizada.</span></p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Função para reservar o livro
+        function reservarLivro() {
+            const livroSelecionado = document.getElementById("livro").value;
+            document.getElementById("livro-reservado").textContent = livroSelecionado;
+            document.getElementById("status-reserva").textContent = "Livro reservado com sucesso!";
+        }
+
+        // Função para cancelar a reserva
+        function cancelarReserva() {
+            document.getElementById("livro-reservado").textContent = "Nenhum";
+            document.getElementById("status-reserva").textContent = "Reserva cancelada.";
+        }
+    </script>
+
+</body>
+</html>
+
